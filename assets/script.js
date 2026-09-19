@@ -119,3 +119,23 @@ if (heroVisual && heroCopy && !reduceMotion.matches && desktopMotion.matches) {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 }
+
+const earlyAccessForm = document.querySelector('#early-access-form');
+if (earlyAccessForm) {
+  earlyAccessForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = earlyAccessForm.querySelector('#contact-name')?.value.trim() || '';
+    const email = earlyAccessForm.querySelector('#contact-email')?.value.trim() || '';
+    const role = earlyAccessForm.querySelector('#contact-role')?.value.trim() || '';
+    const message = earlyAccessForm.querySelector('#contact-message')?.value.trim() || '';
+    const lines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      role ? `Role / Institution: ${role}` : null,
+      message ? `Message: ${message}` : null
+    ].filter(Boolean);
+    const body = encodeURIComponent(lines.join('\n'));
+    const subject = encodeURIComponent('Seivol early access');
+    window.location.href = `mailto:hello@seivol.com?subject=${subject}&body=${body}`;
+  });
+}
