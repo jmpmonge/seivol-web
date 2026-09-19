@@ -7,6 +7,7 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
 
 
 
+/* —— Hero: CSS grid (no absolute overlap) — stable at any browser zoom —— */
 .hero.hero-bleed,
 .hero.hero-bleed.container{
   display:block!important;
@@ -18,99 +19,35 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
   grid-template-columns:none!important;
   padding:0!important;
   box-sizing:border-box;
-}
-
-/* Hero band: image reaches left under the fade; right inset = other bands; flush top/bottom */
-.hero.hero-bleed{
   position:relative;
   overflow:hidden;
   background:#fff;
-  --hero-side:max(48px,calc((100% - 1200px)/2));
 }
-.hero-bleed .hero-visual{
-  position:absolute!important;
-  top:0!important;
-  right:calc(var(--hero-side) + var(--band-text-inset,20px))!important;
-  bottom:0!important;
-  left:32%!important;
-  width:auto!important;
-  max-width:none!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  overflow:hidden!important;
-  display:block!important;
-  will-change:transform;
-  z-index:0;
-  animation:heroIn 1.2s cubic-bezier(.22,1,.36,1) .08s both;
-}
-/* Left fade on the image itself — visible with cover, tracks zoom */
-.hero-bleed .hero-visual::after{
-  content:""!important;
-  display:block!important;
-  position:absolute!important;
-  inset:0!important;
-  z-index:2!important;
-  pointer-events:none!important;
-  background:linear-gradient(90deg,
-    #fff 0%,
-    rgba(255,255,255,.9) 7%,
-    rgba(255,255,255,.45) 14%,
-    rgba(255,255,255,.12) 20%,
-    transparent 28%)!important;
-}
-.hero-fade{
-  display:none!important;
-}
-.hero-bleed .hero-visual.is-loaded{
-  background:transparent!important;
-  border-radius:0!important;
-}
-.hero-bleed .hero-visual img,
-.hero-bleed .hero-visual.is-loaded>img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:none!important;
-  min-width:0!important;
-  object-fit:cover!important;
-  object-position:right center!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-  /* Left shorter + right a bit longer */
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 10%,#000 88%,rgba(0,0,0,.55) 95%,transparent 100%)!important;
-  mask-image:linear-gradient(90deg,transparent 0%,#000 10%,#000 88%,rgba(0,0,0,.55) 95%,transparent 100%)!important;
-}
-.hero-bleed .hero-content{
-  position:relative;
-  z-index:2;
-  width:min(1200px,calc(100% - 96px));
-  max-width:1200px;
-  margin:0 auto;
-  min-height:clamp(260px,28vw,320px)!important;
-  padding-block:22px 20px!important;
-  padding-inline:var(--band-text-inset,20px);
-  display:flex;
-  align-items:center;
-  pointer-events:none;
+.hero-bleed .hero-split{
+  display:grid!important;
+  /* Text | flexible spacer | image — spacer absorbs zoom/resize so they never collide */
+  grid-template-columns:minmax(0,26rem) minmax(1.5rem,1fr) minmax(0,1.35fr)!important;
+  gap:0!important;
+  align-items:center!important;
+  padding-block:28px 24px!important;
+  padding-inline:var(--band-text-inset,20px)!important;
   box-sizing:border-box;
 }
 .hero-bleed .hero-copy{
-  /* Stay in the clear zone left of the image (image starts ~32vw) */
-  max-width:min(28rem,calc(32vw - 2.5rem));
+  grid-column:1;
+  max-width:26rem;
   width:100%;
   min-width:0;
+  margin:0;
+  padding:0;
+  padding-right:0.75rem;
   box-sizing:border-box;
-  padding-right:12px;
-  pointer-events:auto;
-  will-change:transform;
+  position:relative;
+  z-index:1;
   animation:heroIn 1s cubic-bezier(.22,1,.36,1) both;
 }
 .hero-bleed .hero-copy .lead{
-  max-width:100%;
+  max-width:36ch;
   width:auto;
   font-size:1.14rem;
   margin-top:14px;
@@ -123,113 +60,130 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
   line-height:1.45;
 }
 .hero-bleed .hero-copy .button{margin-top:0}
-.hero-bleed .hero-copy h1{font-size:clamp(2.1rem,3.2vw,2.85rem);line-height:1.05;letter-spacing:-.04em}
+.hero-bleed .hero-copy h1{
+  font-size:clamp(2.1rem,3.2vw,2.85rem);
+  line-height:1.05;
+  letter-spacing:-.04em;
+}
 .hero-bleed .hero-copy .eyebrow{
   margin-bottom:10px;
   max-width:100%;
   white-space:nowrap;
 }
+.hero-bleed .hero-visual{
+  grid-column:3;
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+  display:block!important;
+  z-index:0;
+  animation:heroIn 1.2s cubic-bezier(.22,1,.36,1) .08s both;
+}
+.hero-bleed .hero-visual.is-loaded{
+  background:transparent!important;
+  border-radius:0!important;
+}
+.hero-bleed .hero-visual img,
+.hero-bleed .hero-visual.is-loaded>img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:100%!important;
+  min-width:0!important;
+  max-height:none!important;
+  aspect-ratio:1024 / 576;
+  object-fit:contain!important;
+  object-position:right center!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 90%,rgba(0,0,0,.5) 96%,transparent 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 90%,rgba(0,0,0,.5) 96%,transparent 100%)!important;
+}
+.hero-bleed .hero-visual::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,
+    #fff 0%,
+    rgba(255,255,255,.88) 6%,
+    rgba(255,255,255,.4) 12%,
+    transparent 22%)!important;
+}
+.hero-fade{display:none!important}
 
 @media(max-width:1100px){
-  .hero.hero-bleed,
-  .hero.hero-bleed.container{padding:0!important}
-  .hero.hero-bleed{--hero-side:max(40px,calc((100% - 1200px)/2))}
-  .hero-bleed .hero-visual{
-    left:28%!important;
-    width:auto!important;
-    max-width:none!important;
-    right:calc(var(--hero-side) + var(--band-text-inset,20px))!important;
+  .hero-bleed .hero-split{
+    grid-template-columns:minmax(0,22rem) minmax(1rem,1fr) minmax(0,1.4fr)!important;
+    padding-block:22px 18px!important;
   }
+  .hero-bleed .hero-copy{max-width:22rem}
+  .hero-bleed .hero-copy h1{font-size:clamp(2rem,3vw,2.5rem)}
   .hero-bleed .hero-visual::after{
     background:linear-gradient(90deg,
       #fff 0%,
-      rgba(255,255,255,.88) 8%,
-      rgba(255,255,255,.4) 16%,
-      transparent 26%)!important;
+      rgba(255,255,255,.85) 8%,
+      transparent 20%)!important;
   }
-  .hero-fade{display:none!important}
-  .hero-bleed .hero-content{
-    min-height:clamp(240px,30vw,280px)!important;
-    padding-block:18px 16px!important;
-    padding-inline:var(--band-text-inset,20px);
-    width:min(1200px,calc(100% - 80px));
-    margin-inline:auto;
-  }
-  .hero-bleed .hero-copy{
-    max-width:min(26rem,calc(28vw - 2rem));
-    width:100%;
-  }
-  .hero-bleed .hero-copy h1{font-size:clamp(2rem,3vw,2.5rem)}
 }
 
 @media(max-width:800px){
-  .hero.hero-bleed,
-  .hero.hero-bleed.container{
-    display:flex!important;
-    flex-direction:column;
-    padding:0!important;
-    gap:0!important;
+  .hero-bleed .hero-split{
+    grid-template-columns:1fr!important;
+    gap:1rem!important;
+    padding-block:20px 16px!important;
+    padding-inline:20px!important;
   }
+  .hero-bleed .hero-copy{
+    grid-column:1;
+    max-width:100%;
+    order:1;
+  }
+  .hero-bleed .hero-copy h1{font-size:clamp(2.3rem,8vw,3rem)}
+  .hero-bleed .hero-copy .eyebrow{white-space:normal}
+  .hero-bleed .hero-actions{flex-wrap:wrap!important}
   .hero-bleed .hero-visual{
-    position:relative;
-    inset:auto;
-    top:auto;
-    right:auto;
-    bottom:auto;
-    left:auto;
+    grid-column:1;
     order:2;
-    width:100%;
-    max-width:none;
-    height:auto;
-    min-height:0;
-    margin:0;
-    margin-right:0;
-    border-radius:0;
     animation:none;
   }
   .hero-bleed .hero-visual img,
   .hero-bleed .hero-visual.is-loaded>img{
-    width:100%;
-    height:auto;
-    max-width:100%;
-    min-width:0;
-    aspect-ratio:auto;
     max-height:min(52vw,320px);
-    object-fit:cover;
-    object-position:center top;
-    border-radius:0!important;
-    -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 100%)!important;
-    mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 100%)!important;
+    aspect-ratio:auto;
+    object-fit:contain!important;
+    object-position:center!important;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 100%)!important;
+    mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 100%)!important;
   }
   .hero-bleed .hero-visual::after{
-    display:block!important;
     background:linear-gradient(180deg,
       #fff 0%,
-      rgba(255,255,255,.75) 18%,
-      transparent 42%)!important;
+      rgba(255,255,255,.7) 16%,
+      transparent 36%)!important;
   }
-  .hero-fade{
-    display:none!important;
-  }
-  .hero-bleed .hero-content{
-    order:1;
-    width:100%;
-    min-height:0;
-    padding-block:20px 16px;
-    padding-inline:20px;
-  }
-  .hero-bleed .hero-copy{max-width:100%}
-  .hero-bleed .hero-copy h1{font-size:clamp(2.3rem,8vw,3rem)}
-  .hero-bleed .hero-actions{flex-wrap:wrap!important}
 }
 
 @media(max-width:600px){
-  .hero.hero-bleed,
-  .hero.hero-bleed.container{padding:0!important}
-  .hero-bleed .hero-content{padding-block:16px 12px;padding-inline:16px}
+  .hero-bleed .hero-split{padding-block:16px 12px!important;padding-inline:16px!important}
   .hero-bleed .hero-visual img,
   .hero-bleed .hero-visual.is-loaded>img{max-height:min(58vw,260px)}
-  .hero-bleed .hero-copy .eyebrow{white-space:normal}
 }
 
 /* Practice card (former hero frame) */
@@ -434,7 +388,7 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
 
 
 /* —— Visual polish + shared two-column geometry —— */
-.hero-bleed .hero-copy .lead{max-width:100%!important;width:auto!important;font-size:1.14rem!important;margin-top:14px!important;line-height:1.55!important}
+.hero-bleed .hero-copy .lead{max-width:36ch!important;width:auto!important;font-size:1.14rem!important;margin-top:14px!important;line-height:1.55!important}
 .hero-bleed .hero-note{max-width:34ch!important;margin-top:14px!important;font-size:.95rem!important;line-height:1.45!important}
 .hero-bleed .hero-actions{flex-wrap:nowrap!important}
 .hero-bleed .hero-actions .button{font-size:1rem!important;white-space:nowrap!important}
