@@ -1,0 +1,15 @@
+.DS_Store
+*.docx
+*.yaml
+*.yml
+Thumbs.db
+.vscode/
+.idea/
+.cursor/
+
+# Working / non-production copies
+*.mp4
+Imagen de Codex*
+Captura de pantalla*
+assets/videos/
+/seivol-hero.jpg
