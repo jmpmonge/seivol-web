@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1024" height="1024" viewBox="164 166 708 708">
+  <title>Language Game Cards — final app icon</title>
+  <desc>Three modular game cards in a compact cascade, carrying a bespoke complementary pair of quotation marks for language production and comprehension.</desc>
+
+  <!-- Constant 44 px modular progression: three game cards, one compact silhouette. -->
+  <!-- Google core palette without green: red and yellow accents, blue as the trusted primary. -->
+  <rect x="172" y="174" width="604" height="604" rx="80" fill="#EA4335"/>
+  <rect x="216" y="218" width="604" height="604" rx="80" fill="#FBBC04"/>
+  <rect x="260" y="262" width="604" height="604" rx="80" fill="#4285F4"/>
+
+  <defs>
+    <!-- Bespoke opening quotation: broad body and an 8 px optical terminal radius. -->
+    <path id="quote-form"
+      d="M 489 400
+         C 431 400, 371 438, 349 499
+         C 326 563, 354 628, 410 654
+         C 464 679, 520 648, 529 594
+         C 535 555, 514 526, 477 511
+         C 446 499, 428 481, 431 461
+         C 435 435, 462 412, 489 408
+         Q 507 404, 489 400
+         Z"/>
+  </defs>
+
+  <!-- Pair centred at (562,564), the exact centre of the front card; 40 px optical channel. -->
+  <use xlink:href="#quote-form" fill="#FFFFFF" transform="matrix(.92 0 0 .92 54.36 76.04)"/>
+  <use xlink:href="#quote-form" fill="#FFFFFF" transform="matrix(-.92 0 0 -.92 1069.64 1051.96)"/>
+</svg>
