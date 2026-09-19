@@ -3,7 +3,8 @@ document.documentElement.classList.add('js');
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#navigation');
 function closeMenu() { menuButton.setAttribute('aria-expanded', 'false'); navigation.classList.remove('is-open'); }
-menuButton.addEventListener('click', () => {
+menuButton.addEventListener('click', (event) => {
+  event.preventDefault();
   const open = menuButton.getAttribute('aria-expanded') !== 'true';
   menuButton.setAttribute('aria-expanded', String(open));
   navigation.classList.toggle('is-open', open);

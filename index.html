@@ -7,8 +7,8 @@
 <meta name="theme-color" content="#245dd8">
 <title>Seivol — English that stays with you.</title>
 <link rel="stylesheet" href="./assets/styles.css">
-<link rel="stylesheet" href="./assets/education.css?v=90">
-<script src="./assets/script.js" defer></script>
+<link rel="stylesheet" href="./assets/education.css?v=140">
+<script src="./assets/script.js?v=2" defer></script>
 <meta property="og:title" content="Seivol — English that stays with you.">
 <meta property="og:description" content="Personalised English practice that helps you remember more, use what you learn and gradually become more independent.">
 <meta property="og:type" content="website">
@@ -21,12 +21,16 @@
 <header class="header">
   <div class="container nav">
     <a class="brand" href="#" aria-label="Seivol home">Seivol</a>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">☰</span></button>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navigation">
+      <svg class="menu-toggle-icon" width="24" height="18" viewBox="0 0 24 18" fill="none" aria-hidden="true" focusable="false">
+        <path d="M1 1.5h22M1 9h22M1 16.5h22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
     <nav id="navigation" aria-label="Primary">
       <a href="#learning">How it works</a>
       <a href="#support">Support</a>
       <a href="#experience">Experience</a>
-      <a class="nav-link" href="mailto:hello@seivol.com?subject=Seivol%20early%20access">Get early access</a>
+      <a class="nav-cta" href="mailto:hello@seivol.com?subject=Seivol%20early%20access">Get early access <span aria-hidden="true">→</span></a>
     </nav>
   </div>
 </header>
@@ -34,7 +38,6 @@
   <section class="hero hero-bleed" aria-labelledby="hero-title">
     <div class="container hero-split">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span>ENGLISH THAT STAYS WITH YOU</p>
         <h1 id="hero-title">Small steps.<br>Real practice.<br><em>Lasting learning.</em></h1>
         <p class="lead">Personalised English practice that helps you remember more, use what you learn and gradually become more independent.</p>
         <div class="hero-actions">
@@ -42,7 +45,14 @@
         </div>
       </div>
       <figure class="hero-visual is-loaded">
-        <img src="./assets/images/seivol-hero.jpg" alt="Seivol app on a phone showing English practice with corrections and progress" width="1024" height="576" decoding="async" fetchpriority="high">
+        <picture>
+          <source media="(max-width:767px)" type="image/webp" srcset="./assets/images/seivol-hero-mobile-1080x1300.webp" width="1080" height="1300">
+          <source media="(max-width:767px)" type="image/png" srcset="./assets/images/seivol-hero-mobile-1080x1300.png" width="1080" height="1300">
+          <source media="(max-width:1199px)" type="image/webp" srcset="./assets/images/image-hero-tablet.webp" width="1229" height="941">
+          <source media="(max-width:1199px)" type="image/png" srcset="./assets/images/image-hero-tablet.png" width="1229" height="941">
+          <source type="image/webp" srcset="./assets/images/image-hero-grande.webp" width="1672" height="941">
+          <img src="./assets/images/image-hero-grande.png" alt="Seivol app on a phone with floating practice cards and progress insights" width="1672" height="941" decoding="async" fetchpriority="high">
+        </picture>
       </figure>
     </div>
   </section>
@@ -122,7 +132,12 @@
     <div class="container">
       <div class="app-showcase app-showcase-blend">
         <figure class="closer-look-visual" data-reveal>
-          <img src="./assets/images/seivol-closer-look.png" alt="Seivol practice: try, get a hint, try again, with AI feedback cards" width="1672" height="941" loading="lazy" decoding="async">
+          <picture>
+            <source media="(max-width:767px)" type="image/webp" srcset="./assets/images/seivol-closer-look-mobile-1080x1300.webp" width="1080" height="1300">
+            <source media="(max-width:767px)" type="image/png" srcset="./assets/images/seivol-closer-look-mobile-1080x1300.png" width="1080" height="1300">
+            <source type="image/webp" srcset="./assets/images/seivol-closer-look.webp" width="1672" height="941">
+            <img src="./assets/images/seivol-closer-look.png" alt="Seivol practice: try, get a hint, try again, with AI feedback cards" width="1672" height="941" loading="lazy" decoding="async">
+          </picture>
         </figure>
         <div class="closer-look-fade" aria-hidden="true"></div>
         <div class="app-copy">
@@ -168,7 +183,12 @@
         </ul>
       </div>
       <figure class="speaking-visual">
-        <img src="./assets/images/seivol-speaking.png?v=2" alt="Phone and feedback cards: Original, Better and Tip during speaking practice" width="1536" height="1024" decoding="async">
+        <picture>
+          <source media="(max-width:767px)" type="image/webp" srcset="./assets/images/seivol-speaking-mobile-1080x1300.webp" width="1080" height="1300">
+          <source media="(max-width:767px)" type="image/png" srcset="./assets/images/seivol-speaking-mobile-1080x1300.png" width="1080" height="1300">
+          <source type="image/webp" srcset="./assets/images/seivol-speaking.webp" width="1536" height="1024">
+          <img src="./assets/images/seivol-speaking.png" alt="Phone and feedback cards: Original, Better and Tip during speaking practice" width="1536" height="1024" loading="lazy" decoding="async">
+        </picture>
         <div class="speaking-fade" aria-hidden="true"></div>
       </figure>
     </div>
@@ -214,7 +234,10 @@
   <section id="foundation" class="section foundation-section">
     <div class="container experience-blend">
       <figure class="experience-shot" data-reveal>
-        <img src="./assets/images/seivol-activities.png" alt="Five Seivol screens: home, reading, practice, speaking and vocabulary review" width="1916" height="821" loading="lazy" decoding="async">
+        <picture>
+          <source type="image/webp" srcset="./assets/images/seivol-activities.webp" width="1916" height="821">
+          <img src="./assets/images/seivol-activities.png" alt="Five Seivol screens: home, reading, practice, speaking and vocabulary review" width="1916" height="821" loading="lazy" decoding="async">
+        </picture>
       </figure>
       <div class="experience-copy">
         <p class="eyebrow">LEARNING FIRST</p>
@@ -237,17 +260,39 @@
     </div>
   </section>
 </main>
-<footer class="footer container">
-  <div class="footer-brand">
-    <a class="brand" href="#" aria-label="Seivol home">Seivol</a>
-    <p>English that stays with you.</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="#" aria-label="Seivol home">Seivol</a>
+        <p class="footer-tagline">English that stays with you.</p>
+        <p class="footer-blurb">Personalised English practice built around practice, memory and meaningful use.</p>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-heading">Explore</h3>
+        <ul class="footer-list">
+          <li><a href="#learning">How it works</a></li>
+          <li><a href="#support">Support</a></li>
+          <li><a href="#experience">Experience</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-heading">Connect</h3>
+        <ul class="footer-list">
+          <li><a href="mailto:hello@seivol.com?subject=Seivol%20early%20access">Get early access</a></li>
+          <li><a href="mailto:hello@seivol.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <p class="footer-copy">© 2026 Seivol</p>
+      <div class="footer-legal">
+        <a href="#" aria-disabled="true" tabindex="-1">Privacy</a>
+        <a href="#" aria-disabled="true" tabindex="-1">Terms</a>
+      </div>
+      <a class="footer-top" href="#main">Back to top <span aria-hidden="true">↑</span></a>
+    </div>
   </div>
-  <div class="footer-links">
-    <a href="mailto:hello@seivol.com">hello@seivol.com</a>
-    <a href="#learning">How it works</a>
-    <a href="#contact">Get early access</a>
-  </div>
-  <a class="footer-top" href="#main">Back to top <span aria-hidden="true">↑</span></a>
 </footer>
 </body>
 </html>
