@@ -140,18 +140,25 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
   max-height:none!important;
   min-width:0!important;
   object-fit:cover!important;
-  /* Anclar a la derecha: con zoom bajo (banda alta) 72%/78% se comía el borde */
   object-position:right center!important;
   transform:none!important;
   border-radius:0!important;
   box-shadow:none!important;
-  /* Fade fijo en px — no crece con el ancho al hacer zoom out (+5px radio) */
-  -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 calc(100% - 29px),rgba(0,0,0,.45) calc(100% - 15px),transparent 100%)!important;
-  mask-image:linear-gradient(90deg,#000 0%,#000 calc(100% - 29px),rgba(0,0,0,.45) calc(100% - 15px),transparent 100%)!important;
+  /* Hero: fade corto (+10px radio) */
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 calc(100% - 46px),rgba(0,0,0,.55) calc(100% - 28px),rgba(0,0,0,.15) calc(100% - 16px),transparent 100%)!important;
+  mask-image:linear-gradient(90deg,#000 0%,#000 calc(100% - 46px),rgba(0,0,0,.55) calc(100% - 28px),rgba(0,0,0,.15) calc(100% - 16px),transparent 100%)!important;
 }
 .hero-bleed .hero-visual::after{
-  display:none!important;
-  content:none!important;
+  display:block!important;
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  width:50px!important;
+  pointer-events:none!important;
+  z-index:1!important;
+  background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.2) 45%,rgba(255,255,255,.65) 78%,#fff 100%)!important;
 }
 .hero-fade{display:none!important}
 
@@ -846,9 +853,21 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
   object-fit:cover;
   object-position:center center;
   border-radius:0;
-  /* Solo borde izquierdo (hacia el texto), corto; derecha intacta */
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.55) 2%,#000 5%,#000 100%);
-  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.55) 2%,#000 5%,#000 100%);
+  /* Misma máscara suave que el hero */
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 calc(100% - 72px),rgba(0,0,0,.72) calc(100% - 48px),rgba(0,0,0,.35) calc(100% - 28px),rgba(0,0,0,.1) calc(100% - 12px),transparent 100%)!important;
+  mask-image:linear-gradient(90deg,#000 0%,#000 calc(100% - 72px),rgba(0,0,0,.72) calc(100% - 48px),rgba(0,0,0,.35) calc(100% - 28px),rgba(0,0,0,.1) calc(100% - 12px),transparent 100%)!important;
+}
+.speaking-visual::after{
+  display:block;
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  width:80px;
+  pointer-events:none;
+  z-index:1;
+  background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.25) 35%,rgba(255,255,255,.7) 70%,#fff 100%);
 }
 .speaking-fade{
   display:none;
@@ -918,6 +937,7 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
     mask-image:none!important;
   }
   .speaking-section .speaking-fade{display:none!important}
+  .speaking-section .speaking-visual::after{display:none!important}
 }
 
 .section-heading h2,
@@ -1019,6 +1039,23 @@ body{background:#fff;font-family:var(--sans);line-height:1.7}h1,h2,h3,h4{font-fa
   border-color:var(--accent);
 }
 .contact-field textarea{min-height:110px}
+.contact-honeypot{
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.contact-form{position:relative}
+.contact-captcha input{
+  max-width:8rem;
+}
+.contact-form-error{
+  margin:0;
+  font-size:.88rem;
+  color:#b42318;
+}
 .contact-submit{
   justify-self:start;
   margin-top:6px;
@@ -1803,15 +1840,50 @@ html{scroll-padding-top:88px}
   /* Match hero copy vertical: same left inset as band text */
   padding-inline-start:var(--band-text-inset,20px);
   box-sizing:border-box;
+  position:relative;
 }
 .header .brand{
-  font-size:1.5rem!important;
-  font-weight:800;
-  font-variation-settings:"wght" 780;
-  letter-spacing:-.055em;
-  color:var(--ink)!important;
+  font-size:1.875rem!important;
+  font-weight:600!important;
+  font-variation-settings:"wght" 650;
+  letter-spacing:-0.2px;
+  color:#173E73!important;
   line-height:1;
   text-decoration:none;
+}
+.lang-switch{
+  display:inline-flex;
+  align-items:center;
+  gap:2px;
+  margin-left:auto;
+  margin-right:16px;
+  padding:3px;
+  border:1px solid #d5e2f4;
+  border-radius:10px;
+  background:#f7faff;
+  flex:0 0 auto;
+}
+.lang-switch__link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:2rem;
+  padding:6px 9px;
+  border-radius:8px;
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-decoration:none;
+  line-height:1;
+}
+.lang-switch__link:hover{
+  color:var(--accent);
+  background:#edf4ff;
+}
+.lang-switch__link.is-active{
+  color:#fff;
+  background:var(--accent);
 }
 .header .menu-toggle{
   display:none;
@@ -1857,6 +1929,10 @@ html{scroll-padding-top:88px}
   display:flex;
   align-items:center;
   gap:8px 22px;
+  /* Ancho del nav EN → el selector EN/ES no salta al cambiar de idioma */
+  min-width:32.5rem;
+  justify-content:flex-end;
+  flex:0 0 auto;
 }
 .header #navigation>a:not(.nav-cta){
   color:var(--ink);
@@ -1907,9 +1983,10 @@ html{scroll-padding-top:88px}
 }
 .footer-logo{
   display:inline-block;
-  font-size:1.45rem;
-  font-weight:750;
-  letter-spacing:-.065em;
+  font-size:1.875rem;
+  font-weight:600;
+  font-variation-settings:"wght" 650;
+  letter-spacing:-0.2px;
   color:#fff;
   line-height:1;
 }
@@ -2005,13 +2082,22 @@ html{scroll-padding-top:88px}
     padding-inline-end:48px!important;
     box-sizing:border-box;
   }
-  /* Brand stronger on mobile: sole identity signal beside hamburger */
+  /* Brand: presencia actual, peso más ligero, azul limpio */
   .header .brand{
-    font-size:1.75rem!important;
-    font-weight:800;
-    font-variation-settings:"wght" 800;
-    letter-spacing:-.06em;
+    font-size:2.15rem!important;
+    font-weight:600!important;
+    font-variation-settings:"wght" 650;
+    letter-spacing:-0.2px;
+    color:#173E73!important;
     align-self:center;
+  }
+  .header .lang-switch{
+    position:absolute;
+    right:56px;
+    top:50%;
+    transform:translateY(-50%);
+    margin:0;
+    z-index:2;
   }
   .header .menu-toggle{
     display:flex!important;
@@ -2037,6 +2123,8 @@ html{scroll-padding-top:88px}
     right:0;
     top:100%;
     width:100%;
+    min-width:0;
+    justify-content:flex-start;
     flex-direction:column;
     align-items:stretch;
     gap:0;

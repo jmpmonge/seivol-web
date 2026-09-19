@@ -1,5 +1,14 @@
 'use strict';
 document.documentElement.classList.add('js');
+
+document.querySelectorAll('[data-lang]').forEach((link) => {
+  link.addEventListener('click', () => {
+    const lang = link.getAttribute('data-lang');
+    if (lang !== 'en' && lang !== 'es') return;
+    try { localStorage.setItem('seivol-lang', lang); } catch (e) {}
+  });
+});
+
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#navigation');
 function closeMenu() { menuButton.setAttribute('aria-expanded', 'false'); navigation.classList.remove('is-open'); }
@@ -122,12 +131,33 @@ if (heroVisual && heroCopy && !reduceMotion.matches && desktopMotion.matches) {
 
 const earlyAccessForm = document.querySelector('#early-access-form');
 if (earlyAccessForm) {
+  const captchaQuestion = earlyAccessForm.querySelector('#contact-captcha-question');
+  const captchaInput = earlyAccessForm.querySelector('#contact-captcha');
+  const formError = earlyAccessForm.querySelector('#contact-form-error');
+  const a = 2 + Math.floor(Math.random() * 7);
+  const b = 1 + Math.floor(Math.random() * 8);
+  const captchaAnswer = a + b;
+  if (captchaQuestion) captchaQuestion.textContent = `${a} + ${b}`;
+
   earlyAccessForm.addEventListener('submit', (event) => {
     event.preventDefault();
+    const honeypot = earlyAccessForm.querySelector('#contact-company')?.value.trim() || '';
+    if (honeypot) return;
+
+    const answered = Number.parseInt(captchaInput?.value.trim() || '', 10);
+    if (answered !== captchaAnswer) {
+      if (formError) formError.hidden = false;
+      captchaInput?.focus();
+      return;
+    }
+    if (formError) formError.hidden = true;
+
     const name = earlyAccessForm.querySelector('#contact-name')?.value.trim() || '';
     const email = earlyAccessForm.querySelector('#contact-email')?.value.trim() || '';
     const role = earlyAccessForm.querySelector('#contact-role')?.value.trim() || '';
     const message = earlyAccessForm.querySelector('#contact-message')?.value.trim() || '';
+    if (!name || !email) return;
+
     const lines = [
       `Name: ${name}`,
       `Email: ${email}`,
@@ -136,6 +166,6 @@ if (earlyAccessForm) {
     ].filter(Boolean);
     const body = encodeURIComponent(lines.join('\n'));
     const subject = encodeURIComponent('Seivol early access');
-    window.location.href = `mailto:hello@seivol.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:jmpmonge@gmail.com?subject=${subject}&body=${body}`;
   });
 }
